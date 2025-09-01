@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameHub | Premium Web Games Collection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: var(--light);
+            min-height: 100vh;
+            background-attachment: fixed;
+            padding-bottom: 2rem;
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo i {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: rgba(0, 0, 0, 0.4);
+            margin: 2rem auto;
+            border-radius: 12px;
+            max-width: 1000px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: #bdc3c7;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .game-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .game-thumb {
+            height: 200px;
+            background: linear-gradient(45deg, #2c3e50, #4ca1af);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-thumb i {
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .game-info {
+            padding: 1.5rem;
+        }
+        
+        .game-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+        
+        .game-info p {
+            color: #bdc3c7;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .play-btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid var(--secondary);
+        }
+        
+        .play-btn:hover {
+            background: transparent;
+            color: var(--secondary);
+        }
+        
+        .social-section {
+            text-align: center;
+            margin: 4rem 0;
+        }
+        
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .instagram {
+            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+        }
+        
+        .linkedin {
+            background: #0077B5;
+        }
+        
+        .coffee {
+            background: linear-gradient(45deg, #FF9500, #FF5E3A);
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animated {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-gamepad"></i>
+                    <span>GameHub</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#games">Games</a></li>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="hero animated">
+            <h1>Premium Web Games Collection</h1>
+            <p>All games are free to play because i know you are broke too.
+                         Works on any device...even on Nokia. 
+                     Enjoy The aaaaaaaaahhhhhhhhhhhhhhhhhh games</p>
+        </section>
+        
+        <section id="games">
+            <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2.5rem;">Game Library</h2>
+            <div class="games-grid">
+                <!-- Game Cards -->
+                <div class="game-card animated delay-1">
+                    <div class="game-thumb">
+                        <i class="fas fa-basketball"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>3D Basketball</h3>
+                        <p>Test your shooting skills in this realistic 3D basketball game. Score as many baskets as you can!</p>
+                        <a href="3d-basketball.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-1">
+                    <div class="game-thumb">
+                        <i class="fas fa-chess-knight"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>3D Chess</h3>
+                        <p>Challenge your strategic thinking with this immersive 3D chess game. Think in three dimensions!</p>
+                        <a href="3d-chess.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-2">
+                    <div class="game-thumb">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Archery</h3>
+                        <p>Take aim and show off your archery skills. Hit the bullseye to score maximum points!</p>
+                        <a href="Archery.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-2">
+                    <div class="game-thumb">
+                        <i class="fas fa-helicopter"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Defly</h3>
+                        <p>Pilot your helicopter through challenging obstacles and enemy territory. How far can you go?</p>
+                        <a href="defly.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-3">
+                    <div class="game-thumb">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Goescape</h3>
+                        <p>Escape from the maze as fast as you can. Avoid obstacles and find the quickest path to freedom.</p>
+                        <a href="Goescape.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-3">
+                    <div class="game-thumb">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Knife Rain</h3>
+                        <p>Survive the raining knives in this intense action game. How long can you last?</p>
+                        <a href="knife-rain.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-1">
+                    <div class="game-thumb">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Maze</h3>
+                        <p>Find your way through complex labyrinths. Can you solve all the challenging puzzles?</p>
+                        <a href="maze.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-1">
+                    <div class="game-thumb">
+                        <i class="fas fa-banana"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Monkey Bounce</h3>
+                        <p>Bounce your way through the jungle with this energetic monkey. Collect bananas and avoid obstacles!</p>
+                        <a href="monkey-bounce.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-2">
+                    <div class="game-thumb">
+                        <i class="fas fa-candy-cane"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>OmNomRun</h3>
+                        <p>Join Om Nom on a sweet adventure through candy land. Run, jump, and collect delicious treats!</p>
+                        <a href="OmNomRun.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-2">
+                    <div class="game-thumb">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Peet-a-Lock</h3>
+                        <p>Test your puzzle-solving skills with this challenging lock game. Can you crack the code?</p>
+                        <a href="peet-a-lock.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-3">
+                    <div class="game-thumb">
+                        <i class="fas fa-flag-checkered"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Race Right</h3>
+                        <p>Get behind the wheel in this fast-paced racing game. Overtake your opponents and claim victory!</p>
+                        <a href="race-right.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-3">
+                    <div class="game-thumb">
+                        <i class="fas fa-ship"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Sea Battle</h3>
+                        <p>Command your fleet in this naval strategy game. Sink enemy ships and dominate the high seas!</p>
+                        <a href="Sea Battle.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-1">
+                    <div class="game-thumb">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Stack Smash</h3>
+                        <p>How high can you stack? Test your timing and precision in this addictive stacking game.</p>
+                        <a href="Stack smash.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-1">
+                    <div class="game-thumb">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Surfer Archers</h3>
+                        <p>Ride the waves and shoot targets in this unique combination of surfing and archery.</p>
+                        <a href="surfer-archers.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-2">
+                    <div class="game-thumb">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>The Little Giant</h3>
+                        <p>Play as a small character in a giant world. Overcome oversized obstacles on your adventure.</p>
+                        <a href="the-little-giant.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-2">
+                    <div class="game-thumb">
+                        <i class="fas fa-gun"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Western Sniper</h3>
+                        <p>Step into the Wild West as a sharpshooter. Take down outlaws with your precision aiming.</p>
+                        <a href="western-sniper.html" class="play-btn">Play Now</a>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-3">
+                    <div class="game-thumb">
+                        <i class="fas fa-dragon"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>About Me</h3>
+                        <p>I know you'll not click it...Obviously who gives a fuck about Developer</p>
+                        <a href="Z-Games-links.html" class="play-btn">Dev Talks</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="social-section animated delay-2">
+            <h2 style="margin-bottom: 1rem;">Connect With Me</h2>
+            <p>Follow for updates on new games and features</p>
+            <div class="social-buttons">
+
+                <a href="https://www.paypal.com/paypalme/ashishts1" class="social-btn coffee" target="_blank">
+                    <i class="fas fa-coffee"></i>
+                    <span>Buy Me a Coffee</span>
+                </a>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="animated delay-3">
+        <div class="container">
+            <p>© 2023 GameHub | All Rights Reserved</p>
+            <p>Note: These games contain advertisements not set by me. Please do not click on them.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add intersection observer for scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.animated');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animatedElements.forEach(element => {
+                element.style.opacity = 0;
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
